@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Login</h2>
+
+          <div class="mt-2 mb-3"><span class="error">{{loginError}}</span></div>
+          <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                [(ngModel)]="loginData.username" 
+                required 
+                #username="ngModel"
+                class="form-control"
+                placeholder="Enter your username">
+              <div *ngIf="username.invalid && username.touched" class="text-danger small">
+                Username is required
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                [(ngModel)]="loginData.password" 
+                required 
+                minlength="8"
+                maxlength="16"
+                #password="ngModel"
+                class="form-control"
+                placeholder="Enter your password">
+              <div *ngIf="password.invalid && password.touched" class="text-danger small">
+                Password must be between 8 and 16 characters
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-flex align-items-center">
+              <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+                Login
+              </button>&nbsp;
+              <a href="/register" class="btn btn-primary">Register</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--app-dashboard [balance]="currentBalance" [accountNo]="currentAccountNo" [transactions]="currentTransactions">
+
+</app-dashboard-->
