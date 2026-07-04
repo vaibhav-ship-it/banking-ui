@@ -28,7 +28,7 @@ export class Login {
     
   }
   loginData = {
-    username: '',
+    username: 'vaibhav0320@gmail.com',
     password: 'Abcd@1234'
   };
 
