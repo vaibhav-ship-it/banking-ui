@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat """
+                powershell """
                     dir
                     node --version
                     npm --version
