@@ -1,0 +1,9 @@
+{
+  "port": 4200,
+  "server": {
+    "baseDir": "./dist/banking",
+    "middleware": {
+      "1": null
+    }
+  }
+}
