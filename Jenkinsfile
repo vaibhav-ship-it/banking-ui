@@ -23,10 +23,12 @@ pipeline {
         stage('Remove Old Contaner')    {
             steps {
                 powershell '''
-                    if ("$(docker ps -q -f name=$CONTAINER_NAME)") then
+                    $containerId = docker ps -q -f "name=$CONTAINER_NAME"
+
+                    if ($containerId) {
                         docker stop $CONTAINER_NAME
                         docker rm $CONTAINER_NAME
-                    fi
+                    }
                 '''
             }
         }
