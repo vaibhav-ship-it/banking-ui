@@ -21,17 +21,21 @@ pipeline {
             }
         }
         stage('Remove Old Contaner')    {
-            powershell '''
-                if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
-                    docker stop $CONTAINER_NAME
-                    docker rm $CONTAINER_NAME
-                fi
-            '''
+            steps {
+                powershell '''
+                    if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+                        docker stop $CONTAINER_NAME
+                        docker rm $CONTAINER_NAME
+                    fi
+                '''
+            }
         }
         stage('Run New Container')   {
-            powershell """
-                docker run -d --name=$CONTAINER_NAME -p 4200:4200 $IMAGE_NAME:$IMAGE_TAG
-            """
+            steps {
+                powershell """
+                    docker run -d --name=$CONTAINER_NAME -p 4200:4200 $IMAGE_NAME:$IMAGE_TAG
+                """
+            }
         }
     }
 }
