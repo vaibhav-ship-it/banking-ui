@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { errorContext } from 'rxjs/internal/util/errorContext';
 import { Transaction } from '../classes/transaction';
 import { Observable } from 'rxjs';
+import { APP_CONFIG } from '../app.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
 
-  accountNoUrl : string = "http://localhost:9000/loggedInUserAccountNo";
-  currentBalanceUrl : string = "http://localhost:9000/getBalance";
-  transactionHistoryUrl : string = "http://localhost:9000/getStatement";
+  accountNoUrl : string = `${APP_CONFIG.API_BASE_URL}/loggedInUserAccountNo`;
+  currentBalanceUrl : string = `${APP_CONFIG.API_BASE_URL}/getBalance`;
+  transactionHistoryUrl : string = `${APP_CONFIG.API_BASE_URL}/getStatement`;
 
   constructor(private http : HttpClient)  {
 

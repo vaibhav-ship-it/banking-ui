@@ -4,15 +4,16 @@ import { LoginResponse } from '../classes/login-response';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Transaction } from '../classes/transaction';
+import { APP_CONFIG } from '../app.constants';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loginUrl : string = "http://localhost:9000/login";
+  private loginUrl : string = `${APP_CONFIG.API_BASE_URL}/login`;
   private token : string;
-  accountNoUrl : string = "http://localhost:9000/loggedInUserAccountNo";
-  currentBalanceUrl : string = "http://localhost:9000/getBalance";
-  transactionHistoryUrl : string = "http://localhost:9000/getStatement";
+  accountNoUrl : string = `${APP_CONFIG.API_BASE_URL}/loggedInUserAccountNo`;
+  currentBalanceUrl : string = `${APP_CONFIG.API_BASE_URL}/getBalance`;
+  transactionHistoryUrl : string = `${APP_CONFIG.API_BASE_URL}/getStatement`;
   balance : number = 0;
   transactions : Transaction[] = [];
 
