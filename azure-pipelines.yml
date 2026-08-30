@@ -1,0 +1,53 @@
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  acrName: bankingacr
+  acrLoginServer: bankingacr.azurecr.io
+  imageTag: $(Build.BuildId)
+  subscriptionName : Azure Subscription 1
+  
+steps:
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '22.x'
+
+- script: |
+    npm install
+  displayName: Install Packages
+
+- script: |
+    npm run build
+  displayName: Build Angular
+
+- task: AzureCLI@2
+  displayName: ACR Login
+  inputs:
+    azureSubscription: $(subscriptionName)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az acr login --name $(acrName)
+
+- script: |
+    docker build -t $(acrLoginServer)/banking-ui:$(imageTag) .
+    docker push $(acrLoginServer)/banking-ui:$(imageTag)
+  displayName: Build And Push Angular Image
+
+- task: AzureCLI@2
+  displayName: Connect AKS
+  inputs:
+    azureSubscription: $(subscriptionName)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az aks get-credentials \
+        --resource-group banking-rg \
+        --name banking-aks \
+        --overwrite-existing
+
+      kubectl rollout restart deployment bankingui
